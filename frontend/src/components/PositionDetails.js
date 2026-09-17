@@ -52,8 +52,14 @@ const PositionsDetails = () => {
             }
         };
 
-        fetchInterviewFlow();
-        fetchCandidates();
+        // Las fases deben cargarse ANTES que los candidatos: fetchCandidates
+        // mapea sobre las fases existentes, así que en paralelo podría perder
+        // los candidatos si su respuesta llega antes que la del flujo.
+        const loadBoard = async () => {
+            await fetchInterviewFlow();
+            await fetchCandidates();
+        };
+        loadBoard();
     }, [id]);
 
     const updateCandidateStep = async (candidateId, applicationId, newStep) => {
@@ -110,7 +116,7 @@ const PositionsDetails = () => {
             <Button variant="link" onClick={() => navigate('/positions')} className="mb-3">
                 Volver a Posiciones
             </Button>
-            <h2 className="text-center mb-4">{positionName}</h2>
+            <h2 className="text-center mb-4" data-testid="position-title">{positionName}</h2>
             <DragDropContext onDragEnd={onDragEnd}>
                 <Row>
                     {stages.map((stage, index) => (

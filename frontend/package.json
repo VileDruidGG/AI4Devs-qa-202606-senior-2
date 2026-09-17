@@ -29,6 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest --config jest.config.js",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
   }
 }
